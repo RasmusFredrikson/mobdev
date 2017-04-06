@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Custom controls</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map;
+      var newYork = {lat: 40.7564729, lng: -73.9737229};
+
+      function ZoomControl(controlDiv, map) {
+
+        // Set CSS for the control border.
+        var zoomInButton = document.createElement('div');
+        zoomInButton.style.backgroundColor = '#fff';
+        zoomInButton.style.border = '2px solid #fff';
+        zoomInButton.style.borderRadius = '3px';
+        zoomInButton.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        zoomInButton.style.cursor = 'pointer';
+        zoomInButton.style.marginBottom = '2px';
+        zoomInButton.style.textAlign = 'center';
+        zoomInButton.style.width = '32px'; 
+        zoomInButton.style.height = '32px';
+        zoomInButton.title = 'Click to zoom in';
+        controlDiv.appendChild(zoomInButton);
+
+        // Set CSS for the control interior.
+        var zoomInButton_text = document.createElement('div');
+        zoomInButton_text.style.color = 'rgb(25,25,25)';
+        zoomInButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        zoomInButton_text.style.fontSize = '16px';
+        zoomInButton_text.style.lineHeight = '38px';
+        zoomInButton_text.style.paddingLeft = '5px';
+        zoomInButton_text.style.paddingRight = '5px';
+        zoomInButton_text.innerHTML = ' + ';
+        zoomInButton.appendChild(zoomInButton_text);
+
+
+        var zoomOutButton = document.createElement('div');
+        zoomOutButton.style.backgroundColor = '#fff';
+        zoomOutButton.style.border = '2px solid #fff';
+        zoomOutButton.style.borderRadius = '3px';
+        zoomOutButton.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        zoomOutButton.style.cursor = 'pointer';
+        zoomOutButton.style.marginBottom = '22px';
+        zoomOutButton.style.textAlign = 'center';
+        zoomOutButton.style.width = '32px'; 
+        zoomOutButton.style.height = '32px';
+        zoomOutButton.title = 'Click to zoom out';
+        controlDiv.appendChild(zoomOutButton);
+
+        // Set CSS for the control interior.
+        var zoomOutButton_text = document.createElement('div');
+        zoomOutButton_text.style.color = 'rgb(25,25,25)';
+        zoomOutButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        zoomOutButton_text.style.fontSize = '16px';
+        zoomOutButton_text.style.lineHeight = '38px';
+        zoomOutButton_text.style.paddingLeft = '5px';
+        zoomOutButton_text.style.paddingRight = '5px';
+        zoomOutButton_text.innerHTML = ' - ';
+        zoomOutButton.appendChild(zoomOutButton_text);
+
+        // Setup the click event listeners: simply set the map to Chicago.
+        google.maps.event.addDomListener(zoomInButton, 'click', function() {
+        map.setZoom(map.getZoom() + 1);
+        });
+
+        // Setup the click event listener - zoomOut
+        google.maps.event.addDomListener(zoomOutButton, 'click', function() {
+          map.setZoom(map.getZoom() - 1);
+        });  
+
+      }
+
+      function MapTypeControl(controlDiv, map) {
+
+        // Set CSS for the control border.
+        var mapTypeButton_satellite = document.createElement('div');
+        mapTypeButton_satellite.style.backgroundColor = 'rgb(255, 252, 169)';
+        mapTypeButton_satellite.style.border = '2px solid red';
+        mapTypeButton_satellite.style.borderRadius = '3px';
+        mapTypeButton_satellite.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        mapTypeButton_satellite.style.cursor = 'pointer';
+        mapTypeButton_satellite.style.marginBottom = '2px';
+        mapTypeButton_satellite.style.textAlign = 'center';
+        mapTypeButton_satellite.title = 'Click to zoom in';
+        controlDiv.appendChild(mapTypeButton_satellite);
+
+        // Set CSS for the control interior.
+        var mapTypeButton_satellite_text = document.createElement('div');
+        mapTypeButton_satellite_text.style.color = 'rgb(25,25,25)';
+        mapTypeButton_satellite_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        mapTypeButton_satellite_text.style.fontSize = '16px';
+        mapTypeButton_satellite_text.style.lineHeight = '38px';
+        mapTypeButton_satellite_text.style.paddingLeft = '5px';
+        mapTypeButton_satellite_text.style.paddingRight = '5px';
+        mapTypeButton_satellite_text.innerHTML = ' Satellite ';
+        mapTypeButton_satellite.appendChild(mapTypeButton_satellite_text);
+
+
+        var mapTypeButton_hybrid = document.createElement('div');
+        mapTypeButton_hybrid.style.backgroundColor = 'rgb(255, 252, 169)';
+        mapTypeButton_hybrid.style.border = '2px solid rgb(10, 47, 255)';
+        mapTypeButton_hybrid.style.borderRadius = '3px';
+        mapTypeButton_hybrid.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        mapTypeButton_hybrid.style.cursor = 'pointer';
+        mapTypeButton_hybrid.style.marginBottom = '22px';
+        mapTypeButton_hybrid.style.textAlign = 'center';
+        mapTypeButton_hybrid.title = 'Click to zoom out';
+        controlDiv.appendChild(mapTypeButton_hybrid);
+
+        // Set CSS for the control interior.
+        var mapTypeButton_hybrid_text = document.createElement('div');
+        mapTypeButton_hybrid_text.style.color = 'rgb(25,25,25)';
+        mapTypeButton_hybrid_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        mapTypeButton_hybrid_text.style.fontSize = '16px';
+        mapTypeButton_hybrid_text.style.lineHeight = '38px';
+        mapTypeButton_hybrid_text.style.paddingLeft = '5px';
+        mapTypeButton_hybrid_text.style.paddingRight = '5px';
+        mapTypeButton_hybrid_text.innerHTML = ' Hybrid ';
+        mapTypeButton_hybrid.appendChild(mapTypeButton_hybrid_text);
+
+        // Setup the click event listeners: simply set the map to Chicago.
+        google.maps.event.addDomListener(mapTypeButton_satellite, 'click', function() {
+          map.setMapTypeId('satellite');
+        });
+
+        // Setup the click event listener - zoomOut
+        google.maps.event.addDomListener(mapTypeButton_hybrid, 'click', function() {
+          map.setMapTypeId('hybrid');
+        });  
+
+      }
+
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 18,
+          mapTypeId: 'satellite',
+          tilt: 45,
+          disableDefaultUI: true,
+          center: newYork
+        });
+
+        // Create the DIV to hold the control and call the CenterControl()
+        // constructor passing in this DIV.
+        var zoomControlDiv = document.createElement('div');
+        var zoomControl = new ZoomControl(zoomControlDiv, map);
+
+        zoomControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(zoomControlDiv);
+
+        var mapControlDiv = document.createElement('div');
+        var mapControl = new MapTypeControl(mapControlDiv, map);
+
+        mapControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.LEFT_TOP].push(mapControlDiv);
+
+
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsAAwkCzlk62xCn9hxLRA3qmNjkKbSfeE&callback=initMap">
+    </script>
+  </body>
+</html>

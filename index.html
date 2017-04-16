@@ -1,10 +1,16 @@
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Ikon-->
+    <!-- iPad (Retina) -->
+    <link rel="apple-touch-icon" sizes="144x144" href="logo.png">
+    <!--Startskärm-->
+    <!-- iPhone (Retina) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" href="startup3.png">
+     
     <title>Custom controls</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
@@ -17,14 +23,154 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        //Prevent text size change on orientation change.
+        -webkit-text-size-adjust: 100%;
       }
     </style>
   </head>
+
+    <!-- CONFIGURATION -->
+
+    <!-- Allow web app to be run in full-screen mode. -->
+    <meta name="apple-mobile-web-app-capable"
+          content="yes">
+
+    <!-- Make the app title different than the page title. -->
+    <meta name="apple-mobile-web-app-title"
+          content="MobileMap">
+
+    <!-- Configure the status bar. -->
+    <meta name="apple-mobile-web-app-status-bar-style"
+          content="black">
+
+    <!-- Set the viewport. -->
+    <meta name="viewport"
+          content="initial-scale=1">
+
+    <!-- Disable automatic phone number detection. -->
+    <meta name="format-detection"
+          content="telephone=no">
+
+    <!-- ICONS -->
+
+    <!-- iPad retina icon -->
+    <link href="logo.png"
+          sizes="152x152"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPad retina icon (iOS < 7) -->
+    <link href="logo.png"
+          sizes="144x144"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPad non-retina icon -->
+    <link href="logo.png"
+          sizes="76x76"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPad non-retina icon (iOS < 7) -->
+    <link href="logo.png"
+          sizes="72x72"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone 6 Plus icon -->
+    <link href="logo.png"
+          sizes="120x120"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone retina icon (iOS < 7) -->
+    <link href="logo.png"
+          sizes="114x114"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone non-retina icon (iOS < 7) -->
+    <link href="logo.png"
+          sizes="57x57"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- STARTUP IMAGES -->
+
+    <!-- iPad retina portrait startup image -->
+    <link href="startup3.png"
+          media="(device-width: 768px) and (device-height: 1024px)
+                 and (-webkit-device-pixel-ratio: 2)
+                 and (orientation: portrait)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPad retina landscape startup image -->
+    <link href="startup3.png"
+          media="(device-width: 768px) and (device-height: 1024px)
+                 and (-webkit-device-pixel-ratio: 2)
+                 and (orientation: landscape)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPad non-retina portrait startup image -->
+    <link href="startup3.png"
+          media="(device-width: 768px) and (device-height: 1024px)
+                 and (-webkit-device-pixel-ratio: 1)
+                 and (orientation: portrait)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPad non-retina landscape startup image -->
+    <link href="startup3.png"
+          media="(device-width: 768px) and (device-height: 1024px)
+                 and (-webkit-device-pixel-ratio: 1)
+                 and (orientation: landscape)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPhone 6 Plus portrait startup image -->
+    <link href="startup3.png"
+          media="(device-width: 414px) and (device-height: 736px)
+                 and (-webkit-device-pixel-ratio: 3)
+                 and (orientation: portrait)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPhone 6 Plus landscape startup image -->
+    <link href="startup3.png"
+          media="(device-width: 414px) and (device-height: 736px)
+                 and (-webkit-device-pixel-ratio: 3)
+                 and (orientation: landscape)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPhone 6 startup image -->
+    <link href="startup3.png"
+          media="(device-width: 375px) and (device-height: 667px)
+                 and (-webkit-device-pixel-ratio: 2)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPhone 5 startup image -->
+    <link href="startup3.png"
+          media="(device-width: 320px) and (device-height: 568px)
+                 and (-webkit-device-pixel-ratio: 2)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPhone < 5 retina startup image -->
+    <link href="startup3.png"
+          media="(device-width: 320px) and (device-height: 480px)
+                 and (-webkit-device-pixel-ratio: 2)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPhone < 5 non-retina startup image -->
+    <link href="startup3.png"
+          media="(device-width: 320px) and (device-height: 480px)
+                 and (-webkit-device-pixel-ratio: 1)"
+          rel="apple-touch-startup-image">
+
+
+    <!-- HACKS -->
+
+   
+
+
   <body>
     <div id="map"></div>
     <script>
       var map;
-      var newYork = {lat: 40.7564729, lng: -73.9737229};
+      var marker;
+      var infoWindow;
+
+      var newYork = {lat: 40.756969, lng: -73.9852141};
+      var slottet = {lat: 59.326520, lng: 18.070707};
 
       function ZoomControl(controlDiv, map) {
 
@@ -46,6 +192,7 @@
         var zoomInButton_text = document.createElement('div');
         zoomInButton_text.style.color = 'rgb(25,25,25)';
         zoomInButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        zoomInButton_text.style.fontWeight="bold";
         zoomInButton_text.style.fontSize = '16px';
         zoomInButton_text.style.lineHeight = '38px';
         zoomInButton_text.style.paddingLeft = '5px';
@@ -71,6 +218,7 @@
         var zoomOutButton_text = document.createElement('div');
         zoomOutButton_text.style.color = 'rgb(25,25,25)';
         zoomOutButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        zoomOutButton_text.style.fontWeight="bold";
         zoomOutButton_text.style.fontSize = '16px';
         zoomOutButton_text.style.lineHeight = '38px';
         zoomOutButton_text.style.paddingLeft = '5px';
@@ -94,8 +242,8 @@
 
         // Set CSS for the control border.
         var mapTypeButton_satellite = document.createElement('div');
-        mapTypeButton_satellite.style.backgroundColor = 'rgb(255, 252, 169)';
-        mapTypeButton_satellite.style.border = '2px solid red';
+        mapTypeButton_satellite.style.backgroundColor = '#fff';
+        mapTypeButton_satellite.style.border = '2px solid #fff';
         mapTypeButton_satellite.style.borderRadius = '3px';
         mapTypeButton_satellite.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
         mapTypeButton_satellite.style.cursor = 'pointer';
@@ -108,6 +256,7 @@
         var mapTypeButton_satellite_text = document.createElement('div');
         mapTypeButton_satellite_text.style.color = 'rgb(25,25,25)';
         mapTypeButton_satellite_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        mapTypeButton_satellite_text.style.fontWeight="bold";
         mapTypeButton_satellite_text.style.fontSize = '16px';
         mapTypeButton_satellite_text.style.lineHeight = '38px';
         mapTypeButton_satellite_text.style.paddingLeft = '5px';
@@ -117,8 +266,8 @@
 
 
         var mapTypeButton_hybrid = document.createElement('div');
-        mapTypeButton_hybrid.style.backgroundColor = 'rgb(255, 252, 169)';
-        mapTypeButton_hybrid.style.border = '2px solid rgb(10, 47, 255)';
+        mapTypeButton_hybrid.style.backgroundColor = '#fff';
+        mapTypeButton_hybrid.style.border = '2px solid #fff';
         mapTypeButton_hybrid.style.borderRadius = '3px';
         mapTypeButton_hybrid.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
         mapTypeButton_hybrid.style.cursor = 'pointer';
@@ -131,6 +280,7 @@
         var mapTypeButton_hybrid_text = document.createElement('div');
         mapTypeButton_hybrid_text.style.color = 'rgb(25,25,25)';
         mapTypeButton_hybrid_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        mapTypeButton_hybrid_text.style.fontWeight="bold";
         mapTypeButton_hybrid_text.style.fontSize = '16px';
         mapTypeButton_hybrid_text.style.lineHeight = '38px';
         mapTypeButton_hybrid_text.style.paddingLeft = '5px';
@@ -149,7 +299,115 @@
         });  
 
       }
+function PositionControl(controlDiv, map) {
 
+        // Set CSS for the control border.
+        var positionButton = document.createElement('div');
+        positionButton.style.backgroundColor = '#fff';
+        positionButton.style.border = '2px solid #fff';
+        positionButton.style.borderRadius = '3px';
+        positionButton.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        positionButton.style.cursor = 'pointer';
+        positionButton.style.marginBottom = '2px';
+        positionButton.style.marginRight = '2px';
+        positionButton.style.textAlign = 'center';
+        //positionButton.style.width = '32px'; 
+        //positionButton.style.height = '32px';
+        positionButton.title = 'Click to get your position';
+        controlDiv.appendChild(positionButton);
+
+        // Set CSS for the control interior.
+        var positionButton_text = document.createElement('div');
+        positionButton_text.style.color = 'rgb(25,25,25)';
+        positionButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        positionButton_text.style.fontWeight="bold";
+        positionButton_text.style.fontSize = '16px';
+        positionButton_text.style.lineHeight = '38px';
+        positionButton_text.style.paddingLeft = '5px';
+        positionButton_text.style.paddingRight = '5px';
+        positionButton_text.innerHTML = 'My position';
+        positionButton.appendChild(positionButton_text);
+ 
+        // Setup the click event listeners: simply set the map to Chicago.
+        google.maps.event.addDomListener(positionButton, 'click', function(e) {
+          infoWindow = new google.maps.InfoWindow;
+          // Try HTML5 geolocation.
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+              infoWindow.setPosition(pos);
+              infoWindow.setContent('You are here');
+              infoWindow.open(map);
+              map.setCenter(pos);
+            }, function() {
+              handleLocationError(true, infoWindow, map.getCenter());
+            });
+          } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+          }
+        });
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+          infoWindow.setPosition(pos);
+          infoWindow.setContent(browserHasGeolocation ?
+                                'Error: The Geolocation service failed.' :
+                                'Error: Your browser doesn\'t support geolocation.');
+          infoWindow.open(map);        
+        };
+      }
+
+      function LocationControl(controlDiv, map) {
+
+        // Set CSS for the control border.
+        var locationButton = document.createElement('div');
+        locationButton.style.backgroundColor = '#fff';
+        locationButton.style.border = '2px solid #fff';
+        locationButton.style.borderRadius = '3px';
+        locationButton.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        locationButton.style.cursor = 'pointer';
+        locationButton.style.marginBottom = '2px';
+        locationButton.style.marginRight = '2px';
+        locationButton.style.textAlign = 'center';
+        //locationButton.style.width = '32px'; 
+        //locationButton.style.height = '32px';
+        locationButton.title = 'Click to get your position';
+        controlDiv.appendChild(locationButton);
+
+        // Set CSS for the control interior.
+        var locationButton_text = document.createElement('div');
+        locationButton_text.style.color = 'rgb(25,25,25)';
+        locationButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        locationButton_text.style.fontWeight="bold";
+        locationButton_text.style.fontSize = '16px';
+        locationButton_text.style.lineHeight = '38px';
+        locationButton_text.style.paddingLeft = '5px';
+        locationButton_text.style.paddingRight = '5px';
+        locationButton_text.innerHTML = 'Slottet';
+        locationButton.appendChild(locationButton_text);
+ 
+        // Setup the click event listeners: simply set the map to Chicago.
+        google.maps.event.addDomListener(locationButton, 'click', function(e) {
+          infoWindow = new google.maps.InfoWindow;
+              var pos = slottet;
+              infoWindow.setPosition(pos);
+              infoWindow.setContent('Stockholms slott');
+              infoWindow.open(map);
+              map.setCenter(pos);
+        });
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+          infoWindow.setPosition(pos);
+          infoWindow.setContent(browserHasGeolocation ?
+                                'Error: The Geolocation service failed.' :
+                                'Error: Your browser doesn\'t support geolocation.');
+          infoWindow.open(map);        
+        };
+      }
+      
 
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -172,10 +430,21 @@
         var mapControl = new MapTypeControl(mapControlDiv, map);
 
         mapControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.LEFT_TOP].push(mapControlDiv);
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(mapControlDiv);
 
+        var positionControlDiv = document.createElement('div');
+        var positionControl = new PositionControl(positionControlDiv, map);
 
-      }
+        positionControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(positionControlDiv);
+
+        var locationControlDiv = document.createElement('div');
+        var locationControl = new LocationControl(locationControlDiv, map);
+
+        locationControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationControlDiv);
+}
+
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsAAwkCzlk62xCn9hxLRA3qmNjkKbSfeE&callback=initMap">

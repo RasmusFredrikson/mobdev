@@ -164,7 +164,6 @@
     <div id="map"></div>
     <script>
       var map;
-      var marker;
       var infoWindow;
 
       var kth = {lat: 59.3498092, lng: 18.0684758};
@@ -347,6 +346,20 @@
           center: kth
         });
 
+        var fixedMarker = new google.maps.Marker({
+          position: kth,
+          draggable: false,
+          animation: google.maps.Animation.BOUNCE,
+          title:"KTH"
+        });
+
+        var draggableMarker = new google.maps.Marker({
+          position: slottet,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          title:"KTH"
+        });
+
         // Create the DIV to hold the control and call the CenterControl()
         // constructor passing in this DIV.
         var zoomControlDiv = document.createElement('div');
@@ -370,17 +383,11 @@
         var locationControlDiv = document.createElement('div');
         var locationControl = new LocationControl(locationControlDiv, map);
 
-        var marker = new google.maps.Marker({
-          position: kth,
-          draggable: false,
-          animation: google.maps.Animation.DROP,
-          title:"KTH"
-        });
-
-        marker.setMap(map);
+        fixedMarker.setMap(map);
+        draggableMarker.setMap(map);
 
         locationControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationControlDiv);
       }
 
     </script>

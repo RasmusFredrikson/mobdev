@@ -1,0 +1,34 @@
+.button {
+	/*Exterior*/
+	background-color: #fff;
+	border: 2px solid #fff;
+	border-radius: 3px;
+	box-shadow: 0 2px 6px rgba(0,0,0,.3);
+	cursor: pointer;
+	text-align: center;
+
+	/*Interior*/
+	color: rgb(25,25,25);
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 38px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.zoombutton {
+	width: 32px; 
+}
+
+.marginbottom2 {
+	margin-bottom: 2px;
+}
+
+.marginbottom22 {
+	margin-bottom: 22px;
+}
+
+.marginright2 {
+	margin-right: 2px;
+}

@@ -9,20 +9,20 @@ app.beaconRegions =
 	{
 		id: 'page-feet',
 		uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-		major: 35,
-		minor: 15
+		major: 57356,
+		minor: 14220
 	},
 	{
 		id: 'page-shoulders',
 		uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-		major: 20,
-		minor: 18
+		major: 13154,
+		minor: 26625
 	},
 	{
 		id: 'page-face',
 		uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-		major: 21,
-		minor: 19
+		major: 22296,
+		minor: 48975
 	}
 ]
 
@@ -126,7 +126,7 @@ app.didRangeBeaconsInRegion = function(pluginResult)
 
 	// If the beacon represents the current page but is far away,
 	// then show the default page.
-	if ((beacon.proximity == 'ProximityFar' || beacon.proximity == 'ProximityNear')
+	if ((beacon.proximity == 'ProximityFar')
 		&& app.currentPage == pageId)
 	{
 		app.gotoPage('page-default')

@@ -3,74 +3,78 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=yes,
-		initial-scale=1.0" />
+	initial-scale=1.0" />
 
 	<title>Relaxation iBeacons</title>
 
 	<style>
-	@import 'page.css';
+		@import 'page.css';
 	</style>
 
 	<script>
 	// Redirect console if running from Evothings Workbench.
 	if (window.hyper) { console.log = hyper.log }
-	</script>
+</script>
 </head>
 
 <body>
 	<div class="my-page" id="page-default">
 		<div class="my-header">
-			<img class="my-header-image" src="photos/photo-default.jpg" />
+			<img class="my-header-image" src="photos/stockholm.jpg" />
 			<img class="my-icon-back" src="icon-back.png" ontouchend="history.back()" />
 		</div>
 		<div class="my-content">
 			<h1>Beautiful sites in Stockholm</h1>
 			<p>There are lots of beautiful places in Stockholm to visit, 
-			just go near one and you will find plenty of information here</p>
+				just go near one and you will find plenty of information here</p>
+			</div>
+			<audio src="lux.mp3" controls>
+				<p>If you are reading this, it is because your browser does not support the audio element.</p>
+			</audio>
 		</div>
-	</div>
 
-	<div class="my-page" id="stadshuset">
-		<div class="my-header">
-			<img class="my-header-image" src="photos/photo-feet.jpg" />
-			<img class="my-icon-back" src="icon-back.png" ontouchend="history.back()" />
+		<div class="my-page" id="stadshuset">
+			<div class="my-header">
+				<img class="my-header-image" src="photos/photo-feet.jpg" />
+				<img class="my-icon-back" src="icon-back.png" ontouchend="history.back()" />
+			</div>
+			<div class="my-content">
+				<audio src="lux.mp3" controls>
+					<p>If you are reading this, it is because your browser does not support the audio element.</p>
+				</audio>
+			</div>
 		</div>
-		<div class="my-content">
 
+		<div class="my-page" id="globen">
+			<div class="my-header">
+				<img class="my-header-image" src="photos/globen.jpeg" />
+				<img class="my-icon-back" src="icon-back.png" ontouchend="history.back()" />
+			</div>
+			<div class="my-content">
+				<h1>Globen</h1>
+				<audio src="globen.mp3" controls>
+					<p>If you are reading this, it is because your browser does not support the audio element.</p>
+				</audio>
+				<p>
+					Ericsson Globe (originally known as Stockholm Globe Arena, commonly referred to in Swedish simply as Globen (The Globe)) is an indoor arena located in Stockholm Globe City, Johanneshov district of Stockholm, Sweden. The Ericsson Globe is the largest hemispherical building on Earth and took two and a half years to build. Shaped like a large white ball, it has a diameter of 110 metres (361 feet) and an inner height of 85 metres (279 feet). The volume of the building is 605,000 cubic metres (21,188,800 cubic feet). It has a seating capacity of 16,000 spectators for shows and concerts, and 13,850 for ice hockey.
+					It represents the Sun in the Sweden Solar System, the world's largest scale model of the Solar System.[2]
+					On February 2, 2009, the naming rights to the Stockholm Globe Arena were officially acquired by Swedish telecommunications company Ericsson, and it became known as the Ericsson Globe.[3]
+				</p>
+			</div>
 		</div>
-	</div>
 
-	<div class="my-page" id="globen">
-		<div class="my-header">
-			<img class="my-header-image" src="photos/photo-shoulders-1.jpg" />
-			<img class="my-icon-back" src="icon-back.png" ontouchend="history.back()" />
-		</div>
-		<div class="my-content">
-			<h1>Feel Your Shoulders</h1>
-			<ul>
-				<li>Let your arms hang loose.</li>
-				<li>Become aware of the shoulders.</li>
-				<li>Slightly lift one shoulder and release it.</li>
-				<li>Let the shoulder come all the way down.</li>
-				<li>Lift the other shoulder and release it.</li>
-				<li>Alternate three more times on each side.</li>
-				<li>Experience the breath flowing in and out of the body.</li>
-			</ul>
-		</div>
-	</div>
+		<div class="my-page" id="kth">
+			<div class="my-header">
+				<img class="my-header-image" src="photos/photo-face.jpg" />
+				<img class="my-icon-back" src="icon-back.png" ontouchend="history.back()" />
+			</div>
+			<div class="my-content">
 
-	<div class="my-page" id="kth">
-		<div class="my-header">
-			<img class="my-header-image" src="photos/photo-face.jpg" />
-			<img class="my-icon-back" src="icon-back.png" ontouchend="history.back()" />
+			</div>
 		</div>
-		<div class="my-content">
-			
-		</div>
-	</div>
 
-	<script src="lib/jquery.js"></script>
-	<script src="cordova.js"></script>
-	<script src="app.js"></script>
-</body>
-</html>
+		<script src="lib/jquery.js"></script>
+		<script src="cordova.js"></script>
+		<script src="app.js"></script>
+	</body>
+	</html>

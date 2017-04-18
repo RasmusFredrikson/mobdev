@@ -242,6 +242,32 @@
         });  
       }
 
+      function PanControl(controlDiv, map, name) {
+
+        // mapTypeButton_satellite exterior
+        var panControlButton = document.createElement('div');
+        panControlButton.className = "button marginbottom2";
+        panControlButton.title = 'Click to go ' + name;
+        controlDiv.appendChild(panControlButton);
+
+        // panControlButton interior.
+        var panControlButton_text = document.createElement('div');
+        panControlButton_text.innerHTML = name;
+        panControlButton.appendChild(panControlButton_text);
+
+        // Setup the click event listener - panControlButton
+        google.maps.event.addDomListener(panControlButton, 'click', function() {
+          if(name== " > ") 
+            map.panBy(100,0);
+          if(name== " < ") 
+            map.panBy(-100,0);
+          if(name== " ^ ") 
+            map.panBy(0,-100);
+          if(name== " v ") 
+            map.panBy(0,100);
+        });
+      }
+
 
       function PositionControl(controlDiv, map) {
 
@@ -377,25 +403,49 @@
         // Create the DIV to hold the control and call the CenterControl()
         // constructor passing in this DIV.
         var zoomControlDiv = document.createElement('div');
-        var zoomControl = new ZoomControl(zoomControlDiv, map);
+        ZoomControl(zoomControlDiv, map);
 
         zoomControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(zoomControlDiv);
 
         var mapControlDiv = document.createElement('div');
-        var mapControl = new MapTypeControl(mapControlDiv, map);
+        MapTypeControl(mapControlDiv, map);
 
         mapControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(mapControlDiv);
 
+        var panSouthControlDiv = document.createElement('div');
+        PanControl(panSouthControlDiv,map, " v ");
+
+        var panNorthControlDiv = document.createElement('div');
+        PanControl(panNorthControlDiv,map, " ^ ");
+
+        var panEastControlDiv = document.createElement('div');
+        PanControl(panEastControlDiv,map, " > ");
+
+        var panWestControlDiv = document.createElement('div');
+        PanControl(panWestControlDiv,map, " < ");
+
+        panSouthControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.BOTTOM].push(panSouthControlDiv);
+
+        panNorthControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP].push(panNorthControlDiv);
+
+        panEastControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(panEastControlDiv);
+
+        panWestControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.LEFT_CENTER].push(panWestControlDiv);
+
         var positionControlDiv = document.createElement('div');
-        var positionControl = new PositionControl(positionControlDiv, map);
+        PositionControl(positionControlDiv, map);
 
         positionControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(positionControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(positionControlDiv);
 
         var locationControlDiv = document.createElement('div');
-        var locationControl = new LocationControl(locationControlDiv, map);
+        LocationControl(locationControlDiv, map);
 
         fixedMarker.setMap(map);
         draggableMarker.setMap(map);

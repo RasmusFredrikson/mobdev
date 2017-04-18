@@ -13,7 +13,7 @@
 
   <link rel="stylesheet" type="text/css" href="style.css">
 
-  <title>Custom controls</title>
+  <title>MobileMap</title>
   <style>
       /* Always set the map height explicitly to define the size of the div
       * element that contains the map. */
@@ -165,6 +165,7 @@
     <script>
       var map;
       var infoWindow;
+      var draggableMarker;
 
       var kth = {lat: 59.3498092, lng: 18.0684758};
       var newYork = {lat: 40.756969, lng: -73.9852141};
@@ -326,9 +327,9 @@
         google.maps.event.addDomListener(newYorkButton, 'click', function(e) {
           infoWindow = new google.maps.InfoWindow;
           var pos = newYork;
-          infoWindow.setPosition(pos);
-          infoWindow.setContent('New York');
-          infoWindow.open(map);
+          //infoWindow.setPosition(pos);
+          //infoWindow.setContent('New York');
+          //infoWindow.open(map);
           map.setCenter(pos);
         });
       }
@@ -346,6 +347,8 @@
           center: kth
         });
 
+          
+          
         var fixedMarker = new google.maps.Marker({
           position: kth,
           draggable: false,
@@ -353,12 +356,23 @@
           title:"KTH"
         });
 
-        var draggableMarker = new google.maps.Marker({
+        var draggableMarker2 = new google.maps.Marker({
           position: slottet,
           draggable: true,
           animation: google.maps.Animation.DROP,
           title:"KTH"
         });
+          
+          draggableMarker = new google.maps.Marker({
+          position: newYork,
+          draggable: false,
+          animation: google.maps.Animation.DROP,
+          title:"KTH",
+          icon: 'Info_icon3.png',
+          map: map
+        });
+          
+        draggableMarker.addListener('click', toggleBounce);
 
         // Create the DIV to hold the control and call the CenterControl()
         // constructor passing in this DIV.
@@ -386,10 +400,16 @@
         fixedMarker.setMap(map);
         draggableMarker.setMap(map);
 
-        locationControlDiv.index = 1;
+        locationControlDiv.index = 10;
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationControlDiv);
       }
-
+        function toggleBounce() {
+        if (draggableMarker.getAnimation() !== null) {
+          draggableMarker.setAnimation(null);
+        } else {
+          draggableMarker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsAAwkCzlk62xCn9hxLRA3qmNjkKbSfeE&callback=initMap">

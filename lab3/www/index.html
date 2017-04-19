@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css"/>
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css"/>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script>
+  //ons.platform.select('android')
+  ons.platform.select('ios')
+  </script>
+  <script src="lib/jquery/jquery-3.2.1.min.js"></script>
+  <style>
+  .page-content {
+    padding: 10px;
+  }
+  </style>
+</head>
+
+<body>
+
+<!-- The navigator object holds pages -->
+
+<ons-navigator class="appNavigator" page="pageMain.html"></ons-navigator>
+
+<!-- This is the first page, naming convention is to use ."html" for page templates (they can also be placed in separate files, so this makes kind of sense). -->
+
+<ons-template id="pageMain.html">
+  <ons-page id="pageMain">
+    <ons-toolbar>
+      <div class="center">JS Mobile Frameworks</div>
+    </ons-toolbar>
+    <ons-list>
+      <ons-list-item onclick="showPage('pageIntroduction.html')" modifier="chevron" tappable>
+        Introduction
+      </ons-list-item>
+      <ons-list-item onclick="showPage('pageOverview.html')" modifier="chevron" tappable>
+        JS Frameworks Overview
+      </ons-list-item>
+      <ons-list-item onclick="showPage('pageJSHints.html')" modifier="chevron" tappable>
+        JavaScript Hints and Tricks
+      </ons-list-item>
+    </ons-list>
+  </ons-page>
+</ons-template>
+
+<ons-template id="pageIntroduction.html">
+  <ons-page id="pageIntroduction">
+    <ons-toolbar>
+      <div class="left"><ons-back-button>Menu</ons-back-button></div>
+      <div class="center">Introduction</div>
+    </ons-toolbar>
+    <div class="page-content">
+      <h1>JavaScript Frameworks for Mobile Development</h1>
+      <p>Welcome to this lecture</p>
+    </div>
+  </ons-page>
+</ons-template>
+
+<ons-template id="pageOverview.html">
+  <ons-page id="pageOverview">
+    <ons-toolbar>
+      <div class="left"><ons-back-button>Menu</ons-back-button></div>
+      <div class="center">Overview</div>
+    </ons-toolbar>
+    <div class="page-content">
+     <p>Overview of JS frameworks</p>
+    </div>
+  </ons-page>
+</ons-template>
+
+<ons-template id="pageJSHints.html">
+  <ons-page id="pageJSHints">
+    <ons-toolbar>
+      <div class="left"><ons-back-button>Menu</ons-back-button></div>
+      <div class="center">JavaScript Hints and Tricks</div>
+    </ons-toolbar>
+    <div class="page-content">
+      <p>JavaScript has some glitches that are good to know about</p>
+    </div>
+  </ons-page>
+</ons-template>
+
+<script>
+function showPage(page) {
+  // jQuery returns an array of DOM objects, we want the first DOM object
+  // which is the have that has the pushPage function.
+  $('.appNavigator')[0].pushPage(page)
+}
+</script>
+</body>
+</html>

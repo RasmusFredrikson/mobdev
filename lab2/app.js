@@ -6,24 +6,24 @@ var app = {}
 // Regions that define which page to show for each beacon.
 app.beaconRegions =
 [
-	{
-		id: 'stadshuset',
-		uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-		major: 57356,
-		minor: 14220
-	},
-	{
-		id: 'globen',
-		uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-		major: 13154,
-		minor: 26625
-	},
-	{
-		id: 'kth',
-		uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-		major: 22296,
-		minor: 48975
-	}
+{
+	id: 'stadshuset',
+	uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+	major: 57356,
+	minor: 14220
+},
+{
+	id: 'globen',
+	uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+	major: 13154,
+	minor: 26625
+},
+{
+	id: 'kth',
+	uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+	major: 22296,
+	minor: 48975
+}
 ]
 
 // Currently displayed page.
@@ -86,13 +86,13 @@ app.startScanForBeacons = function()
 
 		// Start monitoring.
 		locationManager.startMonitoringForRegion(beaconRegion)
-			.fail(console.error)
-			.done()
+		.fail(console.error)
+		.done()
 
 		// Start ranging.
 		locationManager.startRangingBeaconsInRegion(beaconRegion)
-			.fail(console.error)
-			.done()
+		.fail(console.error)
+		.done()
 	}
 }
 
@@ -121,6 +121,15 @@ app.didRangeBeaconsInRegion = function(pluginResult)
 		&& app.currentPage == 'page-default')
 	{
 		app.gotoPage(pageId)
+		return
+	}
+
+		// If the beacon represents the current page but is far away,
+	// then show the default page.
+	if ((beacon.proximity == 'ProximityFar')
+		&& app.currentPage == pageId)
+	{
+		app.gotoPage('page-default')
 		return
 	}
 }

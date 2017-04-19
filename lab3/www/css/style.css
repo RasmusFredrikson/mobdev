@@ -41,3 +41,10 @@
 .fontsize2 {
 	font-size: 2em;
 }
+
+#menu_header {
+	font-weight: bold;
+	background-color: blue;
+	color: white;
+
+}

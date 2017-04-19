@@ -151,8 +151,12 @@
 
 	<ons-template id="about.html">
 		<ons-page id="about">
+		
 			<ons-toolbar class="topbarred">
 				<h1 class="glyphicon glyphicon-home center bold home" aria-hidden="true"> About</h1>
+				<div class="right">
+					<ons-list-item class="topbarred bold" tappable onclick="ons.notification.prompt({message: 'What is your name?'})">Insert name</ons-list-item>
+				</div>
 			</ons-toolbar>
 			<img class="my-header-image img100" src="photos/dolphins.jpg" />
 			<div class="page-content">

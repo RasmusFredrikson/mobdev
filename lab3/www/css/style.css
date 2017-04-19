@@ -8,3 +8,36 @@
 	vertical-align: center;
 	margin-top: 4%;
 }
+
+.topbarblue {
+	background-color: blue;
+}
+
+.topbargreen {
+	background-color: green;
+}
+
+.topbarred {
+	background-color: red;
+}
+
+.topbaryellow {
+	background-color: yellow;
+}
+
+.blacktext {
+	color: black;
+}
+
+.whitetext {
+	color: white;
+}
+
+.bold {
+	font-weight: bold;
+	font-size: 1em;
+}
+
+.fontsize2 {
+	font-size: 2em;
+}

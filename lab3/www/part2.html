@@ -18,8 +18,8 @@
 
 	<script src="lib/onsenui/js/onsenui.min.js"></script>
 	<script>
-		ons.platform.select('android')
-		// ons.platform.select('ios')
+		// ons.platform.select('android')
+		ons.platform.select('ios')
 	</script>
 	<script src="lib/jquery/jquery-3.2.1.min.js"></script>
 	<style>
@@ -52,7 +52,7 @@
 	<ons-template id="pageMain.html">
 		<ons-page id="pageMain">
 			<ons-toolbar>
-				<div class="center">Relaxation</div>
+				<div class="center bold">Relaxation</div>
 			</ons-toolbar>
 			<img class="img100" src="photos/photo-default.jpg">
 			<ons-list>
@@ -74,8 +74,8 @@
 
 	<ons-template id="feet.html">
 		<ons-page id="feet">
-			<ons-toolbar>
-				<div class="center">Feel your feet</div>
+			<ons-toolbar class="topbarblue">
+				<div class="center bold whitetext">Feel your feet</div>
 			</ons-toolbar>
 			<div class="page-content">
 				<div class="my-header">
@@ -101,8 +101,8 @@
 
 	<ons-template id="shoulders.html">
 		<ons-page id="shoulders">
-			<ons-toolbar>
-				<div class="center">Feel your shoulders</div>
+			<ons-toolbar class="topbargreen">
+				<div class="center bold">Feel your shoulders</div>
 			</ons-toolbar>
 			<div class="page-content">
 				<div class="my-header">
@@ -125,8 +125,8 @@
 
 	<ons-template id="face.html">
 		<ons-page id="face">
-			<ons-toolbar>
-				<div class="center">Feel your face</div>
+			<ons-toolbar class="topbaryellow">
+				<div class="center bold blacktext">Feel your face</div>
 			</ons-toolbar>
 			<div class="page-content">
 				<img class="my-header-image img100" src="photos/photo-face.jpg" />
@@ -151,8 +151,8 @@
 
 	<ons-template id="about.html">
 		<ons-page id="about">
-			<ons-toolbar>
-				<h1 class="glyphicon glyphicon-home center home" aria-hidden="true"> About</h1>
+			<ons-toolbar class="topbarred">
+				<h1 class="glyphicon glyphicon-home center bold home" aria-hidden="true"> About</h1>
 			</ons-toolbar>
 			<img class="my-header-image img100" src="photos/dolphins.jpg" />
 			<div class="page-content">

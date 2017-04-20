@@ -83,42 +83,44 @@
 	<ons-template id="feet.html">
 		<ons-page id="feet">
 			<ons-toolbar class="topbarblue">
-			<div class="left" style="padding-left: 0.5em">
-					<ons-icon icon="md-menu" class="whitetext"></ons-icon>
-				</div>
+				<div class="left" style="padding-left: 0.5em">
+					<ons-toolbar-button onclick="fn.open()">
+						<ons-icon icon="md-menu" class="whitetext"></ons-icon>
+					</ons-toolbar-button>				</div>
 			<!--<ons-toolbar-button onclick="fn.open()">
 			<ons-icon icon="md-menu"></ons-icon>
-        </ons-toolbar-button>-->
-				<div class="center bold whitetext">Feel your feet</div>
-			</ons-toolbar>
-			<div class="page-content">
-				<div class="my-header">
-					<img class="my-header-image img100" src="photos/photo-feet.jpg" />
-				</div>
-				<div class="my-content">
-					<ul>
-						<li>Stand on your feet.</li>
-						<li>Experience the contact with the ground.</li>
-						<li>Feel into the soles of the feet.</li>
-						<li>Feel the knees.</li>
-						<li>The hips.</li>
-						<li>The spine.</li>
-						<li>Shoulders.</li>
-						<li>Neck.</li>
-						<li>Head.</li>
-						<li>Feel the connection between the top of the head and the feet.</li>
-					</ul>
-				</div>
-			</div>
-		</ons-page>
-	</ons-template>
+		</ons-toolbar-button>-->
+		<div class="center bold whitetext">Feel your feet</div>
+	</ons-toolbar>
+	<div class="page-content">
+		<div class="my-header">
+			<img class="my-header-image img100" src="photos/photo-feet.jpg" />
+		</div>
+		<div class="my-content">
+			<ul>
+				<li>Stand on your feet.</li>
+				<li>Experience the contact with the ground.</li>
+				<li>Feel into the soles of the feet.</li>
+				<li>Feel the knees.</li>
+				<li>The hips.</li>
+				<li>The spine.</li>
+				<li>Shoulders.</li>
+				<li>Neck.</li>
+				<li>Head.</li>
+				<li>Feel the connection between the top of the head and the feet.</li>
+			</ul>
+		</div>
+	</div>
+</ons-page>
+</ons-template>
 
-	<ons-template id="shoulders.html">
-		<ons-page id="shoulders">
-			<ons-toolbar class="topbargreen">
+<ons-template id="shoulders.html">
+	<ons-page id="shoulders">
+		<ons-toolbar class="topbargreen">
 			<div class="left" style="padding-left: 0.5em">
-					<ons-icon icon="md-menu"></ons-icon>
-				</div>
+				<ons-toolbar-button onclick="fn.open()">
+					<ons-icon icon="md-menu" class="whitetext"></ons-icon>
+				</ons-toolbar-button>			</div>
 				<div class="center bold">Feel your shoulders</div>
 			</ons-toolbar>
 			<div class="page-content">
@@ -144,53 +146,54 @@
 		<ons-page id="face">
 			<ons-toolbar class="topbaryellow">
 				<div class="left" style="padding-left: 0.5em">
-					<ons-icon icon="md-menu"></ons-icon>
-				</div>
-				<div class="center bold blacktext">Feel your face</div>
-			</ons-toolbar>
-			<div class="page-content">
-				<img class="my-header-image img100" src="photos/photo-face.jpg" />
-				<ul>
-					<li>Become aware of your face.</li>
-					<li>Feel the forehead.</li>
-					<li>The eyebrows.</li>
-					<li>Eyes.</li>
-					<li>Nose.</li>
-					<li>Nostrils.</li>
-					<li>Air flowing through the nostrils.</li>
-					<li>Cheeks.</li>
-					<li>Jaw.</li>
-					<li>Lips.</li>
-					<li>Tongue.</li>
-					<li>Whole of the head.</li>
-					<li>The space surrounding the head.</li>
-				</ul>
-			</div>
-		</ons-page>
-	</ons-template>
-
-	<ons-template id="about.html">
-		<ons-page id="about">
-			<ons-toolbar class="topbarblue">
-				<div class="left">
 					<ons-toolbar-button onclick="fn.open()">
 						<ons-icon icon="md-menu" class="whitetext"></ons-icon>
-					</ons-toolbar-button>
+					</ons-toolbar-button>				</div>
+					<div class="center bold blacktext">Feel your face</div>
+				</ons-toolbar>
+				<div class="page-content">
+					<img class="my-header-image img100" src="photos/photo-face.jpg" />
+					<ul>
+						<li>Become aware of your face.</li>
+						<li>Feel the forehead.</li>
+						<li>The eyebrows.</li>
+						<li>Eyes.</li>
+						<li>Nose.</li>
+						<li>Nostrils.</li>
+						<li>Air flowing through the nostrils.</li>
+						<li>Cheeks.</li>
+						<li>Jaw.</li>
+						<li>Lips.</li>
+						<li>Tongue.</li>
+						<li>Whole of the head.</li>
+						<li>The space surrounding the head.</li>
+					</ul>
 				</div>
-				<h1 class="glyphicon glyphicon-home center bold home whitetext" aria-hidden="true"> About</h1>
-				<div class="right">
-					<ons-list-item class="topbarblue whitetext" tappable onclick="ons.notification.confirm({message: 'Are you ready?'})">Ready</ons-list-item>
-				</div>
-			</ons-toolbar>
-			<img class="my-header-image img100" src="photos/dolphins.jpg" />
-			<div class="page-content">
-				<p>This is one of the best relaxation apps ever created, humbly made by Rasmus Fredrikson and Erik Lindbom.</p>
-			</div>
-		</ons-page>
-	</ons-template>
+			</ons-page>
+		</ons-template>
 
-	<script>
-		function showPage(page) {
+		<ons-template id="about.html">
+			<ons-page id="about">
+				<ons-toolbar class="topbarblue">
+					<div class="left">
+						<ons-toolbar-button onclick="fn.open()">
+							<ons-icon icon="md-menu" class="whitetext"></ons-icon>
+						</ons-toolbar-button>
+					</div>
+					<h1 class="glyphicon glyphicon-home center bold home whitetext" aria-hidden="true"> About</h1>
+					<div class="right">
+						<ons-list-item class="topbarblue whitetext" tappable onclick="ons.notification.confirm({message: 'Are you ready?'})">Ready</ons-list-item>
+					</div>
+				</ons-toolbar>
+				<img class="my-header-image img100" src="photos/dolphins.jpg" />
+				<div class="page-content">
+					<p>This is one of the best relaxation apps ever created, humbly made by Rasmus Fredrikson and Erik Lindbom.</p>
+				</div>
+			</ons-page>
+		</ons-template>
+
+		<script>
+			function showPage(page) {
   // jQuery returns an array of DOM objects, we want the first DOM object
   // which is the have that has the pushPage function.
   $('.appNavigator')[0].pushPage(page)

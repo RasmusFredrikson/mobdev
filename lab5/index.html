@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://evothings.com/demos/dome_pics/index.html -->
+<html class="ui-mobile"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--<base href="http://evothings.com/demos/dome_pics/index.html">--><base href=".">
+
+    
+    <meta name="viewport" content="width=device-width, user-scalable=no,
+        shrink-to-fit=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
+    <title>Getting some data from a json API</title>
+    <link rel="stylesheet" href="./dome_of_vision/jquery.mobile-1.4.5.css">
+    <script src="./dome_of_vision/jquery-2.1.1.min.js"></script>
+    <script src="./dome_of_vision/jquery.mobile-1.4.5.js"></script>
+
+    <!-- This script, cordova.js,  is built into Evothings Viewer (i.e. you won't need to add this file to your project) The idea is to pick up a http resource, even if you're using https, which would normally create a cross-protocol violation. The HTTP plug-in from Apache Cordova allows this to be carried out, see especially this post: https://evothings.com/evothings-secured-now-serving-over-https/ -->
+
+    <script src="./dome_of_vision/cordova.js"></script>
+
+    <script>
+    // Redirect console.log to Evothings Workbench, so you can see data under 'Tools'
+    if (window.hyper && window.hyper.log) { hyper.log = console.log }
+    </script>
+</head>
+
+ 
+
+<body class="ui-mobile-viewport ui-overlay-a"><div data-role="page" data-url="/demos/dome_pics/index.html" tabindex="0" class="ui-page ui-page-theme-a ui-page-active" style="min-height: 733px;">
+<script>
+
+// Create an empty sensor object as a global 
+var sensor = {};
+
+// Where the sensor data is stored
+var mSensorDataURL = 'http://backup.evothings.com:8082/output/';
+
+// A subscriber's key (Five other keys also availble at http://smartspaces.r1.kth.se:8082)
+sensor.key = "BQa4EqqbgxfMgpBQ8XwNhvP82Dj";
+
+// A bitmap image describing where the sensor is located
+sensor.image = "https://evothings.com/demos/dome_pics/IMG_1758.JPG";
+
+
+// Function to retrieve data, placing it in a "response" object
+function getJSON() 
+    {
+    if (window.cordova) 
+        {
+            console.log('Using Apache Cordova HTTP GET function');
+            cordovaHTTP.get(
+                mSensorDataURL + sensor.key + '.json?gt[timestamp]=now-1day&page=1',
+                function (response) 
+                    {
+                        if (response) 
+                            {
+                                sensor.data = JSON.parse(response.data)[0];
+                                sensor.fullData = JSON.parse(response.data);
+                                printData();
+                            }
+                    },
+                function (error) 
+                    {
+                    console.log(JSON.stringify(error));
+                    });
+        }    
+    else 
+        {
+            console.log('Not using Cordova, fallback to AJAX via jquery');
+            $.ajax({
+                    url: mSensorDataURL + sensor.key + ".json?gt[timestamp]=now- 1day",
+                    jsonp: "callback",
+                    cache: true,
+                    dataType: "jsonp",
+                    data: 
+                        {
+                            page: 1
+                        },
+                    success: function(response) 
+                        {
+                            if (response && response[0]) 
+                                {
+                                    sensor.data = response[0];
+                                    sensor.fullData = response;
+                                    printData();
+                                }
+                        }
+                });
+        }
+}
+
+
+function printData()    
+    {
+        if (sensor && sensor.data) 
+            {
+            // Display the info.
+                html = '<h1>Sensor Data</h1>'
+                 + '<br /><div id="time">Time  ' + sensor.data.timestamp + '</div>'
+                 + '<div id="hum">Humidity ' + sensor.data.h + ' % (rel)</div>'
+                 + '<div id="temp">Temperature ' + sensor.data.t + ' celcius</div>'
+                 + '<img src="' + sensor.image + '" />'
+            } 
+    else 
+            {
+                html = '<h1>Sensor Data</h1>'
+                 + '<br />Sorry, sensor data not available right now :(</br>'
+                 + '<img src="' + sensor.image + '" />'
+            }
+    document.getElementById("printHere").innerHTML= html;
+    }
+
+
+</script><button onclick="history.back()" class=" ui-btn ui-shadow ui-corner-all">Exit</button><br>
+
+<button onclick="getJSON();" class=" ui-btn ui-shadow ui-corner-all">Retrieve some sensor data</button>
+<div id="printHere"></div>
+
+
+
+</div><div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div></body></html>

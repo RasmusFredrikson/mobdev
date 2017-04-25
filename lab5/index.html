@@ -129,6 +129,7 @@ function heatMap() {
     times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
     datasets = ["data.tsv"];
 
+    document.getElementById('chart').innerHTML = ""; // <-- Clears the div
     var svg = d3.select("#chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -165,7 +166,7 @@ function heatMap() {
                 };
             },
             function(error, data) {
-                var colorScale = d3.scaleQuantize()
+                var colorScale = d3.scaleQuantile()
                 .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
                 .range(colors);
 
@@ -192,7 +193,7 @@ function heatMap() {
                 cards.exit().remove();
 
                 var legend = svg.selectAll(".legend")
-                //.data([0].concat(colorScale.quantiles()), function(d) { return d; });
+                .data([0].concat(colorScale.quantiles()), function(d) { return d; });
 
                 legend.enter().append("g")
                 .attr("class", "legend");
@@ -217,24 +218,14 @@ function heatMap() {
     };
 
     heatmapChart(datasets[0]);
-
-    var datasetpicker = d3.select("#dataset-picker").selectAll(".dataset-button")
-    .data(datasets);
-
-    datasetpicker.enter()
-    .append("input")
-    .attr("value", function(d){ return "Dataset " + d })
-    .attr("type", "button")
-    .attr("class", "dataset-button")
-    .on("click", function(d) {
-        heatmapChart(d);
-    });
+    heatmapChart(datasets[0]);
 }
 
 </script>
 
 
 </script><button onclick="history.back()" class=" ui-btn ui-shadow ui-corner-all">Exit</button><br>
+
 
 <button onclick="getJSON();" class=" ui-btn ui-shadow ui-corner-all">Retrieve some sensor data</button>
 <div id="printHere"></div>

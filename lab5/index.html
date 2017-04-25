@@ -53,7 +53,7 @@ if (window.hyper && window.hyper.log) { hyper.log = console.log }
 var sensor = {};
 
 // Where the sensor data is stored
-var mSensorDataURL = 'http://backup.evothings.com:8082/output/';
+var mSensorDataURL = 'http://backup.evothings.com:8080/output/';
 
 // A subscriber's key (Five other keys also availble at http://smartspaces.r1.kth.se:8082)
 sensor.key = "J3Wgj9qegGFX4r9KlxxGfaeMXQB";
@@ -98,6 +98,7 @@ function getJSON() {
             }
         });
     }
+    heatMap();
 }
 
 
@@ -127,7 +128,7 @@ function heatMap() {
     colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
     days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
-    datasets = ["data.tsv"];
+    datasets = ["data.json"];
 
     document.getElementById('chart').innerHTML = ""; // <-- Clears the div
     var svg = d3.select("#chart").append("svg")
@@ -156,39 +157,34 @@ function heatMap() {
     .attr("transform", "translate(" + gridSize / 2 + ", -6)")
     .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
-    var heatmapChart = function(tsvFile) {
-        d3.tsv(tsvFile,
-            function(d) {
-                return {
-                    day: +d.day,
-                    hour: +d.hour,
-                    value: +d.value
-                };
-            },
-            function(error, data) {
+    var heatmapChart = function(jsonfile) {
+        d3.json(jsonfile,
+            function(data) {
+              for (var i = 0; i < data.length; i++) {
+                console.log(data[i]);
                 var colorScale = d3.scaleQuantile()
-                .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
+                .domain([0, buckets - 1, d3.max(data, function (d) {return d.c; })])
                 .range(colors);
 
                 var cards = svg.selectAll(".hour")
-                .data(data, function(d) {return d.day+':'+d.hour;});
+                .data(data, function(d) {return d.timestamp+':'+d.timestamp;});
 
                 cards.append("title");
 
                 cards.enter().append("rect")
-                .attr("x", function(d) { return (d.hour - 1) * gridSize; })
-                .attr("y", function(d) { return (d.day - 1) * gridSize; })
-                .attr("rx", 4)
-                .attr("ry", 4)
-                .attr("class", "hour bordered")
-                .attr("width", gridSize)
-                .attr("height", gridSize)
-                .style("fill", colors[0]);
+                    .attr("x", function(d) { return (d.l - 1) * gridSize; })
+                    .attr("y", function(d) { return (d.l - 1) * gridSize; })
+                    .attr("rx", 4)
+                    .attr("ry", 4)
+                    .attr("class", "hour bordered")
+                    .attr("width", gridSize)
+                    .attr("height", gridSize)
+                    .style("fill", colors[0]);
 
                 cards.transition().duration(1000)
-                .style("fill", function(d) { return colorScale(d.value); });
+                .style("fill", function(d) { return colorScale(d.c); });
 
-                cards.select("title").text(function(d) { return d.value; });
+                cards.select("title").text(function(d) { return d.c; });
 
                 cards.exit().remove();
 
@@ -212,12 +208,11 @@ function heatMap() {
                 .attr("y", height + gridSize);
 
                 legend.exit().remove();
-
             }
-            );  
+        }
+        );  
     };
 
-    heatmapChart(datasets[0]);
     heatmapChart(datasets[0]);
 }
 

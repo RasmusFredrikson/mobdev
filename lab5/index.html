@@ -160,8 +160,24 @@ function heatMap() {
     var heatmapChart = function(jsonfile) {
         d3.json(jsonfile,
             function(data) {
+            var c_value = 0.0;
+            //var np = 0;
+            var antal;
               for (var i = 0; i < data.length; i++) {
                 console.log(data[i]);
+                  console.log("Timmar: " + data[i].timestamp.split("T")[1].split(":")[0]);
+                  console.log("minuter: " +data[i].timestamp.split("T")[1].split(":")[1].split(":")[0]);
+                  if((data[i].timestamp.split("T")[1].split(":")[1].split(":")[0]) === (data[1-1].timestamp.split("T")[1].split(":")[1].split(":")[0])){
+                      //c_value += parseInt(data[i].c);  
+                      console.log("värdet: " + c_value);
+                  }
+                  antal += 1;
+                  c_value += parseInt(data[i].c);
+                  console.log("antal: " +antal);
+                  console.log("c_value: " + c_value);
+                  console.log("c: " + c_value/antal);
+                  //antal = 0;
+
                 var colorScale = d3.scaleQuantile()
                 .domain([0, buckets - 1, d3.max(data, function (d) {return d.c; })])
                 .range(colors);

@@ -56,7 +56,7 @@ var sensor = {};
 var mSensorDataURL = 'http://backup.evothings.com:8082/output/';
 
 // A subscriber's key (Five other keys also availble at http://smartspaces.r1.kth.se:8082)
-sensor.key = "J3Wgj9qegGFX4r9KlxxGfaeMXQB";
+sensor.key = "L4D98lO9ObtOdzx3PggKIaWmMGA";
 
 // A bitmap image describing where the sensor is located
 sensor.image = "https://evothings.com/demos/dome_pics/IMG_1760.JPG";
@@ -82,7 +82,7 @@ function getJSON() {
     else {
         console.log('Not using Cordova, fallback to AJAX via jquery');
         $.ajax({
-            url: mSensorDataURL + sensor.key + ".json?gt[timestamp]=now- 5hour",
+            url: mSensorDataURL + sensor.key + ".json?gt[timestamp]=now- 1000days",
             jsonp: "callback",
             cache: true,
             dataType: "jsonp",
@@ -175,28 +175,33 @@ function heatMap() {
                 // console.log(sensor.fullData[i])
 
                 var colorScale = d3.scaleQuantile()
-                    .domain([0, buckets - 1, d3.max(sensor.fullData, function (d) {return d.c; })])
+                    .domain([0, buckets - 1, d3.max(sensor.fullData, function (d) {return d.c; })]) //console d.c
                     .range(colors);
-
+                    //console.log("HÄR KOMMER DEN: ");
+                    //console.log(d3.max(sensor.fullData, function (d) {console.log(d.c); return d.c; }));
+                
                 var cards = svg.selectAll(".hour")
                     .data(sensor.fullData, function(d) {return d.timestamp.split("T")[1].split(":")[0];});
-
+               
                 cards.append("title");
-
+                
+                console.log("1:an" + sensor.fullData[0].timestamp.split("T")[0]);
+                console.log("2:an" + sensor.fullData[0].timestamp.split("T")[0].split("-")[2]);
+                console.log((sensor.fullData[0].timestamp.split("T")[0].split("-")[2] % 7) - 1); //HÄR ÄR DEN!!!!!!
+        
                 cards.enter().append("rect")
-                .attr("x", function(d) { return (d.timestamp.split("T")[1].split(":")[0] - 1) * gridSize; })
-                // .attr("y", function(d) { return (d.timestamp.split("T")[1].split(":")[1].split(":")[0] - 1) * gridSize; })
+                .attr("x", function(d) { return (d.timestamp.split("T")[1].split(":")[0]) * gridSize; })
+                .attr("y", function(d, i) { return ((d.timestamp.split("T")[0].split("-")[2] % 7)) * gridSize; })
                 .attr("rx", 4)
                 .attr("ry", 4)
                 .attr("class", "hour bordered")
                 .attr("width", gridSize)
                 .attr("height", gridSize)
-                .style("fill", colors[0]);
+                .style("fill", colors[0])
+                .merge(cards).transition().duration(1000)
+                .style("fill", function(d) {return colorScale(d.c); }); //console d.c
 
-                cards.transition().duration(1000)
-                .style("fill", function(d) {console.log(d.c); return colorScale(d.c); });
-
-                cards.select("title").text(function(d) {console.log(d.c); return d.c; });
+                cards.select("title").text(function(d) {return d.c; }); //console d.c
 
                 cards.exit().remove();
 

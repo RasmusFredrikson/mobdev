@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no
-		initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 
 	<title>EMQTT Painter</title>
 
@@ -11,26 +11,26 @@
 		@import 'ui/css/evothings-app.css';
 		body
 		{
-				display:table;
-				overflow:hidden;
+			display:table;
+			overflow:hidden;
 		}
 		div
 		{
-				display:table-row;
+			display:table-row;
 		}
 		div+ div
 		{
-				height:100%;
+			height:100%;
 		}
 	</style>
 
 	<script>
 	// Redirect console.log to Evothings Workbench.
 	if (window.hyper && window.hyper.log) { console.log = hyper.log }
-	</script>
+</script>
 
-	<script src="cordova.js"></script>
-	<script src="app.js"></script>
+<script src="cordova.js"></script>
+<script src="app.js"></script>
 
 </head>
 
@@ -42,7 +42,7 @@
 		<img class="logotype" src="ui/images/logo.svg" alt="Evothings">
 	</header>
 
-	<h1>MQTT Painter</h1>
+	<h1>Chatty</h1>
 
 	<p>
 		<span id="info">Not Connected</span>
@@ -50,7 +50,7 @@
 	</p>
 
 	<div class="dummy"></div>
-	<div class="canvas-container"><canvas id="canvas" style="margin: 0px;"></canvas></div>
+	<div id="chat"></div>
 
 	<script>
 		// Make the canvas fill the part of the screen that's not taken up by other elements.
@@ -59,14 +59,21 @@
 		document.body.style.overflow = "hidden";
 		document.onreadystatechange = function () {
 			if (document.readyState == "complete") {
-				var canvas = document.getElementById("canvas");
-				canvas.width = canvas.parentElement.clientWidth;
-				canvas.height = canvas.parentElement.clientHeight;
-				console.log("onload: "+canvas.width+"x"+canvas.height);
+				var chat = document.getElementById('chat');
+				var input = document.createElement("textarea");
+				var button = document.createElement("button");
+				button.innerHTML("Send");
+				// document.getElementById("sendMsg").innerHTML("Send");
+				input.name = "post";
+				input.maxLength = "5000";
+				input.cols = "10";
+				input.rows = "5";
+				chat.appendChild(input); //appendChild
+				chat.appendChild(button);
 			}
 		};
 	</script>
 
 	<script src="libs/mqttws/mqttws.js"></script>
-	</body>
+</body>
 </html>

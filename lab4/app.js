@@ -7,8 +7,8 @@ var app = {};
 
 var host = 'vernemq.evothings.com';
 var port = 8084;
-var user = 'anon';
-var password = 'ymous';
+var user = 'muffins';
+var password = '';
 
 app.connected = false;
 app.ready = false;
@@ -32,66 +32,76 @@ app.initialize = function() {
 app.onReady = function() {
 	if (!app.ready) {
 		app.color = app.generateColor(device.uuid); // Generate our own color from UUID
-		app.pubTopic = '/paint/' + device.uuid + '/evt'; // We publish to our own device topic
-		app.subTopic = '/paint/+/evt'; // We subscribe to all devices using "+" wildcard
+		app.pubTopic = '/dolphins/' + device.uuid + '/evt'; // We publish to our own device topic
+		app.subTopic = '/dolphins/+/evt'; // We subscribe to all devices using "+" wildcard
 		app.setupCanvas();
 		app.setupConnection();
 		app.ready = true;
 	}
 }
 
-app.setupCanvas = function() {
-	app.canvas = document.getElementById("canvas");
-	app.ctx = app.canvas.getContext('2d');
-	var left, top;
-	{
-		var totalOffsetX = 0;
-		var totalOffsetY = 0;
-		var curElement = canvas;
-		do {
-			totalOffsetX += curElement.offsetLeft;
-			totalOffsetY += curElement.offsetTop;
-		} while (curElement = curElement.offsetParent)
-		app.left = totalOffsetX;
-		app.top = totalOffsetY;
-	}
-	
-	// We want to remember the beginning of the touch as app.pos
-	canvas.addEventListener("touchstart", function(event) {
-		// Found the following hack to make sure some
-		// Androids produce continuous touchmove events.
-		if (navigator.userAgent.match(/Android/i)) {
-			event.preventDefault();
-		}
-		var t = event.touches[0];
-		var x = Math.floor(t.clientX) - app.left;
-		var y = Math.floor(t.clientY) - app.top;
-		app.pos = {x:x, y:y};
-	});
-	
-	// Then we publish a line from-to with our color and remember our app.pos
-	canvas.addEventListener("touchmove", function(event) {
-		var t = event.touches[0];
-		var x = Math.floor(t.clientX) - app.left;
-		var y = Math.floor(t.clientY) - app.top;
+// app.setupCanvas = function() {
+// 	app.canvas = document.getElementById("canvas");
+// 	app.ctx = app.canvas.getContext('2d');
+// 	var left, top;
+// 	{
+// 		var totalOffsetX = 0;
+// 		var totalOffsetY = 0;
+// 		var curElement = canvas;
+// 		do {
+// 			totalOffsetX += curElement.offsetLeft;
+// 			totalOffsetY += curElement.offsetTop;
+// 		} while (curElement = curElement.offsetParent)
+// 		app.left = totalOffsetX;
+// 		app.top = totalOffsetY;
+// 	}
+
+// 	// We want to remember the beginning of the touch as app.pos
+// 	canvas.addEventListener("touchstart", function(event) {
+// 		// Found the following hack to make sure some
+// 		// Androids produce continuous touchmove events.
+// 		if (navigator.userAgent.match(/Android/i)) {
+// 			event.preventDefault();
+// 		}
+// 		var t = event.touches[0];
+// 		var x = Math.floor(t.clientX) - app.left;
+// 		var y = Math.floor(t.clientY) - app.top;
+// 		app.pos = {x:x, y:y};
+// 	});
+
+// 	// Then we publish a line from-to with our color and remember our app.pos
+// 	canvas.addEventListener("touchmove", function(event) {
+// 		var t = event.touches[0];
+// 		var x = Math.floor(t.clientX) - app.left;
+// 		var y = Math.floor(t.clientY) - app.top;
+// 		if (app.connected) {
+// 			var msg = JSON.stringify({from: app.pos, to: {x:x, y:y}, color: app.color})
+// 			app.publish(msg);
+// 		}
+// 		app.pos = {x:x, y:y};
+// 	});
+// }
+
+app.setupChat = function() {
+	// app.chat = document.getElementById("sendMsg");	
+	chat.addEventListener("click", function(event) {
 		if (app.connected) {
-			var msg = JSON.stringify({from: app.pos, to: {x:x, y:y}, color: app.color})
+			var msg = JSON.stringify({user: "Rasmus", message: "Heeej Raasmus"});
 			app.publish(msg);
 		}
-		app.pos = {x:x, y:y};
-	});
+	})
 }
 
 app.setupConnection = function() {
-  app.status("Connecting to " + host + ":" + port + " as " + device.uuid);
+	app.status("Connecting to " + host + ":" + port + " as " + device.uuid);
 	app.client = new Paho.MQTT.Client(host, port, device.uuid);
 	app.client.onConnectionLost = app.onConnectionLost;
 	app.client.onMessageArrived = app.onMessageArrived;
 	var options = {
-    useSSL: true,
-    onSuccess: app.onConnect,
-    onFailure: app.onConnectFailure
-  }
+		useSSL: true,
+		onSuccess: app.onConnect,
+		onFailure: app.onConnectFailure
+	}
 	app.client.connect(options);
 }
 
@@ -113,11 +123,12 @@ app.unsubscribe = function() {
 
 app.onMessageArrived = function(message) {
 	var o = JSON.parse(message.payloadString);
-	app.ctx.beginPath();
-	app.ctx.moveTo(o.from.x, o.from.y);
-	app.ctx.lineTo(o.to.x, o.to.y);
-	app.ctx.strokeStyle = o.color;
-	app.ctx.stroke();
+	// app.ctx.beginPath();
+	// app.ctx.moveTo(o.from.x, o.from.y);
+	// app.ctx.lineTo(o.to.x, o.to.y);
+	// app.ctx.strokeStyle = o.color;
+	// app.ctx.stroke();
+	console.log(o);
 }
 
 app.onConnect = function(context) {
@@ -127,7 +138,7 @@ app.onConnect = function(context) {
 }
 
 app.onConnectFailure = function(e){
-  console.log("Failed to connect: " + JSON.stringify(e));
+	console.log("Failed to connect: " + JSON.stringify(e));
 }
 
 app.onConnectionLost = function(responseObject) {

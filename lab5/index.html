@@ -159,7 +159,7 @@ function heatMap() {
     var heatmapChart = function() {
 
                 var colorScale = d3.scaleQuantile()
-                    .domain([0, buckets - 1, d3.max(sensor.fullData, function (d) {return d.c; })]) 
+                    .domain([420, buckets - 1, d3.max(sensor.fullData, function (d) {return d.c; })]) 
                     .range(colors);
                     
                 var cards = svg.selectAll(".hour")
@@ -169,7 +169,7 @@ function heatMap() {
                 
                 cards.enter().append("rect")
                 .attr("x", function(d) { return (d.timestamp.split("T")[1].split(":")[0]) * gridSize; })
-                .attr("y", function(d, i) { return ((d.timestamp.split("T")[0].split("-")[2] % 7)) * gridSize; })
+                .attr("y", function(d) { return ((d.timestamp.split("T")[0].split("-")[2] % 7)) * gridSize; })
                 .attr("rx", 4)
                 .attr("ry", 4)
                 .attr("class", "hour bordered")

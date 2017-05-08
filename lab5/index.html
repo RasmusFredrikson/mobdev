@@ -158,37 +158,15 @@ function heatMap() {
 
     var heatmapChart = function() {
 
-                // console.log(data[i]);
-                //   console.log("Timmar: " + data[i].timestamp.split("T")[1].split(":")[0]);
-                //   console.log("minuter: " +data[i].timestamp.split("T")[1].split(":")[1].split(":")[0]);
-                //   if((data[i].timestamp.split("T")[1].split(":")[1].split(":")[0]) === (data[1-1].timestamp.split("T")[1].split(":")[1].split(":")[0])){
-                //       //c_value += parseInt(data[i].c);  
-                //       console.log("värdet: " + c_value);
-                //   }
-                //   antal += 1;
-                //   c_value += parseInt(data[i].c);
-                //   console.log("antal: " +antal);
-                //   console.log("c_value: " + c_value);
-                //   console.log("c: " + c_value/antal);
-                //   //antal = 0;
-
-                // console.log(sensor.fullData[i])
-
                 var colorScale = d3.scaleQuantile()
-                    .domain([0, buckets - 1, d3.max(sensor.fullData, function (d) {return d.c; })]) //console d.c
+                    .domain([0, buckets - 1, d3.max(sensor.fullData, function (d) {return d.c; })]) 
                     .range(colors);
-                    //console.log("HÄR KOMMER DEN: ");
-                    //console.log(d3.max(sensor.fullData, function (d) {console.log(d.c); return d.c; }));
-                
+                    
                 var cards = svg.selectAll(".hour")
                     .data(sensor.fullData, function(d) {return d.timestamp.split("T")[1].split(":")[0];});
                
                 cards.append("title");
                 
-                console.log("1:an" + sensor.fullData[0].timestamp.split("T")[0]);
-                console.log("2:an" + sensor.fullData[0].timestamp.split("T")[0].split("-")[2]);
-                console.log((sensor.fullData[0].timestamp.split("T")[0].split("-")[2] % 7) - 1); //HÄR ÄR DEN!!!!!!
-        
                 cards.enter().append("rect")
                 .attr("x", function(d) { return (d.timestamp.split("T")[1].split(":")[0]) * gridSize; })
                 .attr("y", function(d, i) { return ((d.timestamp.split("T")[0].split("-")[2] % 7)) * gridSize; })
@@ -199,9 +177,9 @@ function heatMap() {
                 .attr("height", gridSize)
                 .style("fill", colors[0])
                 .merge(cards).transition().duration(1000)
-                .style("fill", function(d) {return colorScale(d.c); }); //console d.c
+                .style("fill", function(d) {return colorScale(d.c); }); 
 
-                cards.select("title").text(function(d) {return d.c; }); //console d.c
+                cards.select("title").text(function(d) {return d.c; }); 
 
                 cards.exit().remove();
 

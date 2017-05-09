@@ -5,6 +5,15 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no
 	initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 	<title>EMQTT Painter</title>
 
 	<style>
@@ -46,11 +55,12 @@
 
 	<p>
 		<span id="info">Not Connected</span>
-		<button id="connect" onclick="app.setupConnection();">Reconnect</button>
+		<button id="connect" class="btn-danger" onclick="app.setupConnection();">Reconnect</button>
 	</p>
 
-	<div class="dummy"></div>
-	<div id="chat"></div>
+	<textarea id="messageBox" placeholder="Welcome, to begin chatting simply enter your message below and press send :)" readonly></textarea>
+	<textarea class="col-xs-8 col-sm-8 col-md-8 col-lg-8" placeholder="Enter message" id="inputBox" cols="10" rows="2"></textarea>
+	<button class="col-xs-3 col-sm-3 col-md-3 col-lg-3 btn-success" id="confirmButton">Send</button>
 
 	<script>
 		// Make the canvas fill the part of the screen that's not taken up by other elements.
@@ -59,20 +69,10 @@
 		document.body.style.overflow = "hidden";
 		document.onreadystatechange = function () {
 			if (document.readyState == "complete") {
-				var chat = document.getElementById('chat');
-				var input = document.createElement("textarea");
-				var button = document.createElement("button");
-				button.innerHTML("Send");
-				// document.getElementById("sendMsg").innerHTML("Send");
-				input.name = "post";
-				input.maxLength = "5000";
-				input.cols = "10";
-				input.rows = "5";
-				chat.appendChild(input); //appendChild
-				chat.appendChild(button);
 			}
 		};
 	</script>
+
 
 	<script src="libs/mqttws/mqttws.js"></script>
 </body>

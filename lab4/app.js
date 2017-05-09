@@ -34,59 +34,19 @@ app.onReady = function() {
 		app.color = app.generateColor(device.uuid); // Generate our own color from UUID
 		app.pubTopic = '/dolphins/' + device.uuid + '/evt'; // We publish to our own device topic
 		app.subTopic = '/dolphins/+/evt'; // We subscribe to all devices using "+" wildcard
-		app.setupCanvas();
+		var username = window.prompt("Enter username: ");
+		app.setupChat(username);
 		app.setupConnection();
 		app.ready = true;
 	}
 }
 
-// app.setupCanvas = function() {
-// 	app.canvas = document.getElementById("canvas");
-// 	app.ctx = app.canvas.getContext('2d');
-// 	var left, top;
-// 	{
-// 		var totalOffsetX = 0;
-// 		var totalOffsetY = 0;
-// 		var curElement = canvas;
-// 		do {
-// 			totalOffsetX += curElement.offsetLeft;
-// 			totalOffsetY += curElement.offsetTop;
-// 		} while (curElement = curElement.offsetParent)
-// 		app.left = totalOffsetX;
-// 		app.top = totalOffsetY;
-// 	}
-
-// 	// We want to remember the beginning of the touch as app.pos
-// 	canvas.addEventListener("touchstart", function(event) {
-// 		// Found the following hack to make sure some
-// 		// Androids produce continuous touchmove events.
-// 		if (navigator.userAgent.match(/Android/i)) {
-// 			event.preventDefault();
-// 		}
-// 		var t = event.touches[0];
-// 		var x = Math.floor(t.clientX) - app.left;
-// 		var y = Math.floor(t.clientY) - app.top;
-// 		app.pos = {x:x, y:y};
-// 	});
-
-// 	// Then we publish a line from-to with our color and remember our app.pos
-// 	canvas.addEventListener("touchmove", function(event) {
-// 		var t = event.touches[0];
-// 		var x = Math.floor(t.clientX) - app.left;
-// 		var y = Math.floor(t.clientY) - app.top;
-// 		if (app.connected) {
-// 			var msg = JSON.stringify({from: app.pos, to: {x:x, y:y}, color: app.color})
-// 			app.publish(msg);
-// 		}
-// 		app.pos = {x:x, y:y};
-// 	});
-// }
-
-app.setupChat = function() {
-	// app.chat = document.getElementById("sendMsg");	
-	chat.addEventListener("click", function(event) {
+app.setupChat = function(username) {
+	var confirmButton = document.getElementById("confirmButton");
+	var message = document.getElementById("inputBox");	
+	confirmButton.addEventListener("click", function(event) {
 		if (app.connected) {
-			var msg = JSON.stringify({user: "Rasmus", message: "Heeej Raasmus"});
+			var msg = JSON.stringify({user: username, message: message.value});
 			app.publish(msg);
 		}
 	})
@@ -113,6 +73,8 @@ app.publish = function(json) {
 
 app.subscribe = function() {
 	app.client.subscribe(app.subTopic);
+	// var output = document.getElementById("messageBox");
+	// output.innerHTML = "Kör subscribe till " + app.subTopic;
 	console.log("Subscribed: " + app.subTopic);
 }
 
@@ -123,12 +85,11 @@ app.unsubscribe = function() {
 
 app.onMessageArrived = function(message) {
 	var o = JSON.parse(message.payloadString);
-	// app.ctx.beginPath();
-	// app.ctx.moveTo(o.from.x, o.from.y);
-	// app.ctx.lineTo(o.to.x, o.to.y);
-	// app.ctx.strokeStyle = o.color;
-	// app.ctx.stroke();
-	console.log(o);
+	var output = document.getElementById("messageBox");
+	output.innerHTML += o.user + ": " + o.message + "\n";
+	output.scrollTop = output.scrollHeight;
+	var input = document.getElementById("inputBox");
+	input.value = "";
 }
 
 app.onConnect = function(context) {

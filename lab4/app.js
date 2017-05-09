@@ -36,7 +36,7 @@ app.onReady = function() {
 		app.subTopic = '/dolphins/+/evt'; // We subscribe to all devices using "+" wildcard
 		var username = window.prompt("Enter username: ");
 		app.setupChat(username);
-		app.setupConnection();
+		app.setupConnection(username);
 		app.ready = true;
 	}
 }
@@ -52,12 +52,17 @@ app.setupChat = function(username) {
 	})
 }
 
-app.setupConnection = function() {
+app.setupConnection = function(username) {
 	app.status("Connecting to " + host + ":" + port + " as " + device.uuid);
 	app.client = new Paho.MQTT.Client(host, port, device.uuid);
 	app.client.onConnectionLost = app.onConnectionLost;
 	app.client.onMessageArrived = app.onMessageArrived;
+	var last_will = new Paho.MQTT.Message(JSON.stringify({user: username, message: "Nighty"}));
+	last_will.destinationName = app.pubTopic;
+	last_will.qos = 0;
+	last_will.retained = false;
 	var options = {
+		willMessage: last_will,
 		useSSL: true,
 		onSuccess: app.onConnect,
 		onFailure: app.onConnectFailure
@@ -68,13 +73,13 @@ app.setupConnection = function() {
 app.publish = function(json) {
 	message = new Paho.MQTT.Message(json);
 	message.destinationName = app.pubTopic;
+	message.qos = 2;
+	message.retained = true;
 	app.client.send(message);
 };
 
 app.subscribe = function() {
 	app.client.subscribe(app.subTopic);
-	// var output = document.getElementById("messageBox");
-	// output.innerHTML = "Kör subscribe till " + app.subTopic;
 	console.log("Subscribed: " + app.subTopic);
 }
 
